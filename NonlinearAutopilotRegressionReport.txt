@@ -1,0 +1,222 @@
+C172S NONLINEAR AUTOPILOT V0.1 - CONSOLIDATED REGRESSION REPORT
+Generated UTC: 2026-09-01T03:03:24Z
+MATLAB: 26.1.0.3251617 (R2026a) Update 2
+Nonlinear-autopilot gates passed: 3/3
+Nonlinear-autopilot gates failed: 0/3
+Frozen flight-controls evidence valid: 1
+Frozen flight-controls evidence: 18/18 PASS (external frozen release)
+Frozen flight-controls report: <PROJECT_ROOT>\FlightControlRegressionReport.txt
+Frozen nonlinear 6-DOF evidence valid: 1
+Frozen nonlinear 6-DOF evidence: 7/7 PASS (external frozen release)
+Frozen nonlinear 6-DOF report: <PROJECT_ROOT>\Nonlinear6DofRegressionReport.txt
+Combined project evidence: 28/28 PASS
+Scope: frozen controller v1.0.0 operating one coupled nonlinear 13-state research plant v0.1.0 through interface, closed-loop MATLAB and independent executable Simulink gates.
+Qualification: near-trim attached flow, provisional mass properties, ideal sensors and one-point throttle; no stall/spin, sensor-imperfection, autothrottle or aircraft-truth claim; not aircraft approval.
+
+============================================================
+1. [Interface] Controller/nonlinear-plant interface audit
+Artifact: NONLINEAR-AUTOPILOT-V1-INTERFACE-AUDIT-MATLAB-R1
+Checker: auditC172sNonlinearAutopilotInterfaces.m
+Path: <PROJECT_ROOT>\auditC172sNonlinearAutopilotInterfaces.m
+Status: PASS
+Returned records: 53/53
+Qualified cases: 53
+Duration: 0.152 s
+
+Captured output:
+============================================================
+ C172S NONLINEAR AUTOPILOT V1 - INTERFACE AUDIT
+============================================================
+
+Artifact                               : NONLINEAR-AUTOPILOT-V1-INTERFACE-AUDIT-MATLAB-R1
+Controller release                     : v1.0.0
+Nonlinear plant release                : v0.1.0
+Solver / fixed step                    : ode4 / 0.010 s
+
+[PASS] Frozen Integrated Autopilot revision             INTEGRATED-AUTOPILOT-V1-INTERFACE-AUDIT-MATLAB-R1
+[PASS] Frozen Mode Manager revision                     AUTOPILOT-MODE-MANAGER-V1-AUDIT-MATLAB-R1
+[PASS] Frozen nonlinear dynamics revision               NONLINEAR-6DOF-V1-INTEGRATED-DYNAMICS-AND-LINEARIZATION-MATLAB-R1
+[PASS] Frozen source/convention revision                NONLINEAR-6DOF-V1-SOURCE-AND-CONVENTION-AUDIT-MATLAB-R1
+[PASS] Released actuator paths remain frozen            elevator, aileron and rudder dependency identifiers match
+[PASS] Regression evidence ledger preserved             18/18 controller + 7/7 nonlinear = 25/25 external evidence
+[PASS] Thirteen-state plant contract preserved          u v w p q r, NED position and scalar-first quaternion
+[PASS] Four-control plant contract preserved            elevator, aileron, rudder and throttle ordering matches
+[PASS] Common frozen trim point preserved               4000 ft ISA / 110 KTAS / 2550 lb
+[PASS] Common deterministic execution rate              ode4 / 0.010 s for plant, controllers and supervisor
+[PASS] Actuator dynamics have one owner                 released controller stacks own dynamics, rates and limits
+[PASS] Control adapter is identity plus trim            actual controller surfaces map one-to-one at the zero-surface trim
+[PASS] Nonlinear trim control vector recovered          [deltaE deltaA deltaR throttle] = [0 0 0 0.65]
+[PASS] Elevator sign maps without inversion             positive controller elevator remains trailing-edge down
+[PASS] Aileron sign maps without inversion              positive controller aileron remains right-wing-down
+[PASS] Rudder sign maps without inversion               positive controller rudder remains nose-right
+[PASS] Throttle ownership remains explicit              fixed one-point throttle 0.65; no autothrottle claim
+[PASS] Automatic surface authorities are compatible     plant and released actuator paths share +/-5-deg bounds
+[PASS] Out-of-bounds surfaces are rejected              adapter does not silently clip or enlarge actuator authority
+[PASS] Scalar-first body-to-NED quaternion preserved    trim quaternion [1 0 0 0]
+[PASS] Identity quaternion maps to level attitude       phi/theta/psi are zero at trim
+[PASS] Quaternion-to-Euler sequence is correct          3-2-1 round-trip error 1.11e-16 rad
+[PASS] Positive bank sign is preserved                  positive phi reports right-wing-down bank
+[PASS] Positive pitch sign is preserved                 positive theta reports nose-up pitch
+[PASS] Positive heading sign is preserved               positive psi reports clockwise/nose-right heading
+[PASS] Heading normalization is circular                -10 deg -> 350 deg and 370 deg -> 10 deg
+[PASS] NED-down altitude sign is preserved              positionDown = -1219.2 m maps to +4000 ft
+[PASS] Vertical-speed sign is climb-positive            positionDownDot -2 m/s maps to climb +2 m/s
+[PASS] Trim altitude perturbation is zero               absolute 4000 ft becomes zero outer-loop perturbation
+[PASS] Trim controller feedback is zero                 rates, attitudes and vertical speed close at trim
+[PASS] Controller feedback units are frozen             inner/outer loops retain rad, rad/s, m and m/s
+[PASS] Supervisor feedback units are frozen             Mode Manager receives bank/pitch/heading deg and absolute altitude ft
+[PASS] Degree/radian conversion is reciprocal           rad<->deg mapping has unit product
+[PASS] Foot/metre conversion is reciprocal              m<->ft mapping has unit product
+[PASS] Supervisor command names are frozen              Mode Manager degree/foot outputs are explicit
+[PASS] Bank command converts degrees to radians         10 deg maps to pi/18 rad
+[PASS] Pitch command converts degrees to radians        -2 deg maps without sign inversion
+[PASS] Heading command is normalized in radians         370 deg maps to 10 deg on the circular heading domain
+[PASS] Altitude command becomes a trim perturbation     4100 ft maps to +30.48 m; 4000 ft maps to zero
+[PASS] Command adapter adds no hidden dynamics          mode enables and one-sample tracking requests retain their owner
+[PASS] Manager attitude commands stay inside monitor bounds 20-deg bank and 3-deg pitch commands remain inside V0.1 monitors
+[PASS] Invalid manager command dimensions are rejected  command adapter requires bank, pitch, heading and altitude
+[PASS] Wind and gust stay in NED ownership              adapter passes both three-component NED vectors unchanged
+[PASS] Supervisor status ownership remains external     saturation and pilot-override Booleans are not inferred from state
+[PASS] Ideal trim sensor validity closes                core, heading, altitude and air-data validity are true
+[PASS] Invalid quaternion is rejected                   zero-norm attitude cannot enter the adapter
+[PASS] Invalid feedback dimensions are rejected         adapter requires 13-state and 13-derivative columns
+[PASS] V0.1 envelope monitor is active at trim          TAS 56.589 m/s, alpha -1.88e-16 deg, beta 0 deg
+[PASS] Initialization contract matches trim             trim state, zero released surfaces and throttle 0.65
+[PASS] Deterministic adapter replay                     identical state, derivative and environment reproduce identical signals
+[PASS] No sensor-imperfection claim is introduced       bias, noise, quantization, delay and failures remain outside this adapter
+[PASS] No pilot-force or autothrottle path is invented  pilot override is Boolean and throttle remains fixed
+[PASS] Next executable ownership gates are explicit     single nonlinear plant plus frozen protection and supervisor
+
+Passed audit cases                     : 53/53
+PASS: actuator positions map to the plant without duplicate dynamics.
+PASS: quaternion/NED states map to all frozen feedback channels.
+PASS: signs, units, trim offsets, validity and ownership are frozen.
+NOTE: this validates the interface contract only; closed-loop nonlinear performance remains the next executable gate.
+NOTE: V0.1 remains near-trim with one-point thrust and ideal sensor interfaces; this is not aircraft approval.
+
+
+============================================================
+2. [Closed-loop] Coupled nonlinear closed-loop MATLAB audit
+Artifact: NONLINEAR-AUTOPILOT-V1-CLOSED-LOOP-MATLAB-R1
+Checker: auditC172sNonlinearAutopilotClosedLoop.m
+Path: <PROJECT_ROOT>\auditC172sNonlinearAutopilotClosedLoop.m
+Status: PASS
+Returned records: 48/48
+Qualified cases: 48
+Duration: 285.433 s
+
+Captured output:
+
+============================================================
+ C172S NONLINEAR AUTOPILOT V1 - CLOSED-LOOP MATLAB AUDIT
+============================================================
+
+Artifact                               : NONLINEAR-AUTOPILOT-V1-CLOSED-LOOP-MATLAB-R1
+Controller release                     : v1.0.0
+Nonlinear plant release                : v0.1.0
+Continuous state count                 : 26 = 13 plant + 13 controller
+Hybrid fixed step                      : 0.010 s
+
+[PASS] Frozen nonlinear-autopilot interface revision    NONLINEAR-AUTOPILOT-V1-INTERFACE-AUDIT-MATLAB-R1
+[PASS] Frozen Mode Manager revision                     AUTOPILOT-MODE-MANAGER-V1-AUDIT-MATLAB-R1
+[PASS] Frozen nonlinear dynamics revision               NONLINEAR-6DOF-V1-INTEGRATED-DYNAMICS-AND-LINEARIZATION-MATLAB-R1
+[PASS] Controller and plant releases remain external    controller v1.0.0 and nonlinear plant v0.1.0 remain frozen
+[PASS] External regression ledger preserved             18/18 controller plus 7/7 nonlinear release gates
+[PASS] One coupled aircraft state is retained           single 13-state quaternion/NED aircraft
+[PASS] Controller state ownership is explicit           13 aircraft plus 13 controller states
+[PASS] Actuator states have exactly one owner           released controller positions drive the plant directly
+[PASS] Hybrid execution rate is frozen                  RK4 and Mode Manager execute at 0.010 s
+[PASS] Accepted sensor delays are retained              r/p/phi delays 1 sample; heading delay 5 samples
+[PASS] One-point throttle ownership is unchanged        fixed trim throttle 0.65; no autothrottle
+[PASS] Disengaged nonlinear trim remains equilibrium    maximum non-navigation state error 2.14e-16
+[PASS] Disengaged actuator outputs are released         maximum surface 0 deg
+[PASS] Disengaged supervisor remains OFF/OFF            no automatic axis engages without an engage request
+[PASS] Trim quaternion remains normalized               maximum norm error 0
+[PASS] Trim remains inside the V0.1 envelope            violation samples 0
+[PASS] ROLL plus PITCH capture engages both axes        default ROLL/PITCH modes remain active
+[PASS] Engagement emits one-sample tracking requests    one roll and one pitch preload pulse
+[PASS] Capture-on-engage is bumpless at trim            maximum non-navigation state error 1.15e-16
+[PASS] Simultaneous HEADING plus ALTITUDE remains engaged both outer modes execute on one nonlinear plant
+[PASS] Heading acquisition closes                       final circular heading error 0.000001 deg
+[PASS] Altitude acquisition closes                      final altitude error 0.176441 ft
+[PASS] Coupled rotational axes all respond              peak p/q/r 0.94284/0.37086/0.43587 deg/s
+[PASS] Automatic surface authorities are respected      peak elevator/aileron/rudder 0.16240/0.19333/0.03013 deg
+[PASS] All actuator-rate limits are respected           peak elevator/aileron/rudder rates 0.09209/0.36580/0.06580 deg/s
+[PASS] Controller positions map directly to plant       maximum surface mapping error 0 rad
+[PASS] Throttle remains at its frozen trim value        maximum throttle discrepancy 0
+[PASS] Outer acquisition remains inside V0.1            violation samples 0
+[PASS] Outer acquisition quaternion remains normalized  maximum norm error 2.22e-16
+[PASS] Confirmed heading loss falls back to ROLL        vertical ALTITUDE mode remains active
+[PASS] Heading fallback requests roll tracking          fallback carries its one-sample roll preload handshake
+[PASS] Confirmed altitude loss falls back to PITCH      lateral HEADING mode remains active
+[PASS] Altitude fallback requests pitch tracking        fallback carries its one-sample pitch preload handshake
+[PASS] Pilot disconnect releases both axes              pilot disconnect retains global priority
+[PASS] Pilot disconnect returns surfaces to neutral     maximum final surface 8.97e-37 deg
+[PASS] Pilot override disconnects immediately           pilot override retains immediate global priority
+[PASS] Sustained aileron status disconnects both axes   maximum confirmation timer 3.010 s
+[PASS] Sustained elevator status disconnects both axes  maximum confirmation timer 3.010 s
+[PASS] Steady crosswind produces positive sideslip      maximum pre-gust beta 2.02414 deg
+[PASS] Upward gust produces positive angle of attack    maximum gust alpha 0.49961 deg
+[PASS] Wind and gust response remains engaged           ROLL/PITCH remains active through the environment sequence
+[PASS] Wind and gust response remains inside V0.1       violation samples 0
+[PASS] Wind and gust response remains finite            all aircraft and controller states are finite
+[PASS] Deterministic closed-loop replay                 identical requests and environment reproduce a bitwise-identical trace
+[PASS] Invalid request dimensions are rejected          the 19-column supervisor request contract is enforced
+[PASS] Invalid initial quaternion is rejected           zero-norm attitude cannot enter the closed loop
+[PASS] No unsupported capability is introduced          controller gains, V0.1 aero scope and one-point thrust stay frozen
+[PASS] Minimum audit ledger is complete                 47 cases recorded
+
+Passed audit cases                     : 48/48
+Final heading / altitude error         : 0.000001 deg / 0.176441 ft
+Peak p / q / r                         : 0.94284 / 0.37086 / 0.43587 deg/s
+PASS: one coupled nonlinear aircraft executes under the frozen supervisor.
+PASS: capture, outer modes, fallbacks, disconnects and protection pass.
+PASS: wind/gust execution and deterministic replay pass inside V0.1.
+NOTE: near-trim coefficients, ideal sensors and one-point thrust remain; this is not aircraft approval.
+
+
+============================================================
+3. [Executable] Executable nonlinear-autopilot Simulink equivalence
+Artifact: C172S_NonlinearAutopilot_V1
+Checker: runNonlinearAutopilotSimulinkCheck.m
+Path: <PROJECT_ROOT>\runNonlinearAutopilotSimulinkCheck.m
+Status: PASS
+Returned records: 10/10
+Qualified cases: 11
+Duration: 293.721 s
+
+Captured output:
+Created Simulink model: <PROJECT_ROOT>\C172S_NonlinearAutopilot_V1.slx
+Run runNonlinearAutopilotSimulinkCheck to validate Nonlinear Autopilot V1.
+============================================================
+ C172S NONLINEAR AUTOPILOT V1 - EXECUTABLE SIMULINK CHECK
+============================================================
+
+Model                                  : C172S_NonlinearAutopilot_V1
+Artifact                               : NONLINEAR-AUTOPILOT-V1-CLOSED-LOOP-MATLAB-R1
+Solver / fixed step                    : ode4 / 0.0100 s
+Verification signals                   : 58 = 26 state + 32 diagnostic
+
+[PASS] disengaged nonlinear trim                 OFF/OFF trim; maximum error 4.54747351e-13
+[PASS] ROLL plus PITCH capture                   ROLL/PITCH tracking; maximum error 4.54747351e-13
+[PASS] simultaneous HEADING plus ALTITUDE        HEADING/ALTITUDE errors 0.000001 deg/0.176441 ft; maximum trace error 5.00222086e-12
+[PASS] confirmed heading-source fallback         HEADING->ROLL; maximum error 4.54747351e-13
+[PASS] confirmed altitude-source fallback        ALTITUDE->PITCH; maximum error 4.54747351e-13
+[PASS] pilot disconnect and surface release      release 8.97e-37 deg; maximum error 4.54747351e-13
+[PASS] pilot override priority                   global override; maximum error 4.54747351e-13
+[PASS] sustained aileron protection              aileron protection; maximum error 4.54747351e-13
+[PASS] sustained elevator protection             elevator protection; maximum error 4.54747351e-13
+[PASS] steady wind plus vertical gust            wind/gust inside V0.1; maximum error 9.09494702e-13
+[PASS] deterministic executable replay           outer-mode executable trace is bitwise identical on replay
+
+Passed executable scenarios            : 11/11
+Maximum 58-signal equivalence error    : 5.00222086e-12
+Final heading / altitude error         : 0.000001 deg / 0.176441 ft
+Maximum quaternion norm error          : 2.22044605e-16
+PASS: Simulink reproduces the independent 26-state MATLAB reference.
+PASS: one nonlinear aircraft executes under the frozen controller stack.
+PASS: modes, protection, wind/gust and deterministic replay pass.
+NOTE: near-trim coefficients, ideal sensors and one-point throttle remain; this is not aircraft approval.
+Reloaded generated model to clear transient editor diagnostics.
+
+

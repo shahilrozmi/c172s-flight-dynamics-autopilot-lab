@@ -1,0 +1,402 @@
+C172S NONLINEAR 6-DOF V0.1 - CONSOLIDATED REGRESSION REPORT
+Generated UTC: 2026-09-01T01:49:46Z
+MATLAB: 26.1.0.3251617 (R2026a) Update 2
+Nonlinear gates passed: 7/7
+Nonlinear gates failed: 0/7
+Frozen flight-controls evidence valid: 1
+Frozen flight-controls evidence: 18/18 PASS (external frozen release)
+Frozen flight-controls report: <PROJECT_ROOT>\FlightControlRegressionReport.txt
+Combined project evidence: 25/25 PASS
+Scope: C172S Nonlinear 6-DOF Research Validation Plant V0.1 through independent executable Simulink equivalence.
+Qualification: near-trim attached flow, provisional mass properties and one-point thrust; no stall/spin or aircraft-truth claim; not aircraft approval.
+
+============================================================
+1. [Foundation] Source and convention audit
+Artifact: NONLINEAR-6DOF-V1-SOURCE-AND-CONVENTION-AUDIT-MATLAB-R1
+Checker: auditC172sNonlinear6DofSources.m
+Path: <PROJECT_ROOT>\auditC172sNonlinear6DofSources.m
+Status: PASS
+Cases: 31/31
+Duration: 0.206 s
+
+Captured output:
+============================================================
+ C172S NONLINEAR 6-DOF V1 - SOURCE/CONVENTION AUDIT
+============================================================
+
+Artifact                               : NONLINEAR-6DOF-V1-SOURCE-AND-CONVENTION-AUDIT-MATLAB-R1
+Research plant                         : C172S Nonlinear 6-DOF Research Validation Plant V0.1
+Frame / state count                    : NED / 13 states
+Initial validation point               : 4000 ft / 110 KTAS / 2550 lb
+Source records                         : 6
+
+[PASS] Frozen longitudinal revision                  Longitudinal Plant V1
+[PASS] Frozen lateral revision                       Lateral-Directional Plant V0.1
+[PASS] Released controller stack remains external    v1.0.0 remains frozen at 18/18
+[PASS] Common frozen validation point                4000 ft ISA, 110 KTAS, 2550 lb, flaps 0 deg
+[PASS] Thirteen-state rigid-body contract            u v w p q r, NED position, scalar-first quaternion
+[PASS] Internal SI contract                          m, s, kg, rad, N and N*m internally
+[PASS] Right-handed body axes fixed                  x forward, y right, z down
+[PASS] NED altitude mapping fixed                    altitude is negative NED down position
+[PASS] Quaternion convention fixed                   scalar-first body-to-NED
+[PASS] Quaternion unit-norm invariant                test norm error 0
+[PASS] Elevator sign matches frozen plant            trailing-edge-down gives negative nose-up pitching moment
+[PASS] Aileron sign matches frozen plant             positive command produces positive right-wing-down roll moment
+[PASS] Rudder sign matches frozen plant              positive command produces positive nose-right yaw moment
+[PASS] Angular-rate normalizations preserved         pHat/rHat use span; qHat uses mean aerodynamic chord
+[PASS] Aerodynamic derivatives are per radian        no degree-scaled derivatives enter the force/moment model
+[PASS] Evidence hierarchy complete                   6 sources span evidence tiers A through D
+[PASS] Every source has traceability metadata        URL, exact locator and reuse qualification are populated
+[PASS] NASA flight-test variant identified           1974 C172M N12800; transferable evidence, not direct C172S truth
+[PASS] NASA maneuver tables located correctly        35 maneuver estimates reside in report Tables 6.3/6.4
+[PASS] Composite NASA coefficient row quarantined    unverified one-row transcription is explicitly rejected
+[PASS] Kasnakoglu provenance is not overstated       published analytical/simulation source remains Tier C
+[PASS] UIUC and JSBSim remain subordinate            candidate shapes and architecture cannot override measured anchors
+[PASS] Provisional inertia tensor is positive definite minimum eigenvalue 1424.96 kg*m^2
+[PASS] Inertia uncertainty remains explicit          nominal tensor is provisional; weight/CG schedule and Ixz remain open
+[PASS] Attached-flow V0.1 envelope is bounded        80-130 KTAS, alpha -4 to 10 deg, flaps up
+[PASS] Stall and spin claims remain disabled         no validated stall, departure or spin claim
+[PASS] Model is not labeled aircraft truth           C172S Nonlinear 6-DOF Research Validation Plant V0.1
+[PASS] Equations may precede final aero database     rigid-body kernel may proceed; final coefficient schedules may not
+[PASS] Mandatory next-gate ledger complete           7 unique gates block unsupported expansion
+[PASS] Frozen linearization matching is mandatory    relative Jacobian error <= 1.0e-06
+[PASS] Deterministic replay remains mandatory        identical states and inputs must reproduce identical traces
+
+Passed audit cases                     : 31/31
+PASS: the 13-state SI/NED convention and all control signs are frozen.
+PASS: the released linear plants remain the mandatory trim anchors.
+PASS: source tiers and unsupported-data quarantine are explicit.
+PASS: the rigid-body kernel may proceed within the V0.1 claim boundary.
+NOTE: coefficient schedules, propulsion and mass properties remain provisional until their listed gates pass.
+NOTE: stall, post-stall and spin behavior are outside V0.1; this is not aircraft approval.
+
+
+============================================================
+2. [Foundation] Rigid-body kernel audit
+Artifact: NONLINEAR-6DOF-V1-RIGID-BODY-KERNEL-MATLAB-R1
+Checker: auditC172sRigidBody6DofEom.m
+Path: <PROJECT_ROOT>\auditC172sRigidBody6DofEom.m
+Status: PASS
+Cases: 27/27
+Duration: 0.515 s
+
+Captured output:
+============================================================
+ C172S NONLINEAR 6-DOF V1 - RIGID-BODY KERNEL AUDIT
+============================================================
+
+Artifact                               : NONLINEAR-6DOF-V1-RIGID-BODY-KERNEL-MATLAB-R1
+Source/convention audit                : NONLINEAR-6DOF-V1-SOURCE-AND-CONVENTION-AUDIT-MATLAB-R1
+Provisional mass                       : 1156.661 kg
+Gravity                                : 9.8066 m/s^2
+State count                            : 13
+
+[PASS] Source/convention audit revision                NONLINEAR-6DOF-V1-SOURCE-AND-CONVENTION-AUDIT-MATLAB-R1
+[PASS] Frozen plant anchors preserved                  Longitudinal Plant V1 and Lateral-Directional Plant V0.1
+[PASS] Released controller regression remains external v1.0.0 remains frozen at 18/18
+[PASS] Mass and inertia are physically admissible      mass 1156.661 kg; minimum inertia eigenvalue 1424.96 kg*m^2
+[PASS] Aerodynamics and propulsion are excluded        kernel accepts prescribed non-gravitational force and moment only
+[PASS] Gravity sign in level body axes                 free-fall body acceleration [0.0000 0.0000 9.8066] m/s^2
+[PASS] Level support force balances gravity            Fz = -m*g produces zero translational acceleration
+[PASS] Gravity rotates correctly into body axes        +90-deg pitch maps NED-down gravity to negative body x
+[PASS] Body-to-NED position kinematics                 +90-deg yaw maps body-forward velocity to NED east
+[PASS] Rotating-body transport term sign               -omega cross velocity gives vDot = -r*u
+[PASS] Body-force axis signs                           +Fx/+Fy/+Fz produce +uDot/+vDot/+wDot
+[PASS] Body-moment axis signs                          +L/+M/+N produce +pDot/+qDot/+rDot
+[PASS] Nonzero Ixz inertial coupling                   positive roll moment produces coupled positive pDot and rDot
+[PASS] Continuous quaternion norm invariant            d(q'q)/dt = -2.78e-17
+[PASS] Euler-singularity-free attitude kinematics      quaternion derivative remains finite at pitch 89.999999 deg
+[PASS] Free-fall analytical trajectory                 maximum state error 1.99e-13
+[PASS] Zero-force inertial straight-line motion        constant inertial velocity integrates to the analytical NED position
+[PASS] Torque-free linear momentum conservation        relative error 5.12e-15
+[PASS] Torque-free angular momentum conservation       relative error 5.53e-15
+[PASS] Torque-free kinetic-energy conservation         relative error 6.2e-15
+[PASS] RK4 fourth-order convergence                    coarse/fine error ratio 16.00; fine error 8.21e-10 rad
+[PASS] Deterministic replay                            identical initial state and inputs produce bitwise-identical state
+[PASS] Invalid state dimension rejected                12-state input cannot enter the 13-state kernel
+[PASS] Invalid mass rejected                           zero or negative mass is rejected
+[PASS] Invalid inertia rejected                        non-positive-definite inertia tensor is rejected
+[PASS] Invalid quaternion rejected                     zero-norm quaternion is rejected
+[PASS] Materially non-unit quaternion rejected         quaternion norm errors above 0.01 are rejected
+
+Passed audit cases                     : 27/27
+PASS: translational, rotational, NED and quaternion equations pass.
+PASS: gravity, force, moment and inertial-coupling signs are correct.
+PASS: conservation, RK4 convergence and deterministic replay pass.
+PASS: invalid mass, inertia, state and quaternion inputs are rejected.
+NOTE: this validates the aircraft-independent rigid-body kernel; aerodynamics and propulsion are not yet implemented.
+NOTE: mass properties remain provisional and this is not aircraft approval.
+
+
+============================================================
+3. [Environment] Atmosphere and air-data audit
+Artifact: NONLINEAR-6DOF-V1-ATMOSPHERE-AIR-DATA-MATLAB-R1
+Checker: auditC172sAtmosphereAirData.m
+Path: <PROJECT_ROOT>\auditC172sAtmosphereAirData.m
+Status: PASS
+Cases: 27/27
+Duration: 0.020 s
+
+Captured output:
+============================================================
+ C172S NONLINEAR 6-DOF V1 - ATMOSPHERE/AIR-DATA AUDIT
+============================================================
+
+Artifact                               : NONLINEAR-6DOF-V1-ATMOSPHERE-AIR-DATA-MATLAB-R1
+Rigid-body kernel                      : NONLINEAR-6DOF-V1-RIGID-BODY-KERNEL-MATLAB-R1
+Atmosphere                             : 1976 ISA troposphere
+Frozen trim recovery                   : 4000 ft / 110 KTAS
+
+[PASS] Source/convention audit revision                NONLINEAR-6DOF-V1-SOURCE-AND-CONVENTION-AUDIT-MATLAB-R1
+[PASS] Rigid-body kernel revision                      NONLINEAR-6DOF-V1-RIGID-BODY-KERNEL-MATLAB-R1
+[PASS] Released controller regression remains external v1.0.0 remains frozen at 18/18
+[PASS] Aerodynamics and propulsion remain excluded     environment layer computes no aircraft force or moment
+[PASS] ISA sea-level reference                         T 288.15 K, p 101325.0 Pa, rho 1.2250 kg/m^3
+[PASS] Frozen 4000-ft ISA environment recovered        maximum atmosphere/qbar discrepancy 0
+[PASS] Frozen 110-KTAS air state recovered             TAS 56.588889 m/s, alpha/beta 0/0 rad
+[PASS] NED-down altitude sign                          positionDown = -2000 m produces altitude +2000 m
+[PASS] Atmospheric monotonicity with altitude          temperature, pressure and density decrease through the troposphere
+[PASS] Speed of sound and viscosity are physical       a 335.582 m/s, mu 1.751e-05 Pa*s, Re 5.25e+06
+[PASS] Headwind and tailwind signs                     northward aircraft: negative-N wind raises TAS; positive-N wind lowers TAS
+[PASS] Crosswind sideslip sign                         wind from right produces beta +0.14044 rad
+[PASS] Vertical-gust angle-of-attack sign              upward air-mass gust produces alpha +0.08813 rad
+[PASS] Wind transforms through aircraft attitude       +90-deg yaw makes positive-east wind a tailwind
+[PASS] Steady wind and gust superposition              total wind is the exact vector sum of steady wind and gust
+[PASS] Dynamic-pressure definition                     qbar 1741.901593 Pa
+[PASS] Mach and equivalent-airspeed definitions        Mach 0.16863, EAS 53.32843 m/s
+[PASS] Dynamic-pressure numerical derivative           dqbar/dV 61.563379 Pa*s/m
+[PASS] Angle-of-attack numerical derivative            dalpha/dw 0.01767131 s/m
+[PASS] Sideslip inverse-trig argument is bounded       finite beta 1.57079633 rad
+[PASS] Angle of attack uses atan2                      negative u preserves quadrant: alpha 3.14159265 rad
+[PASS] Low-airspeed protection                         wind cancellation returns finite zero air data and valid=false
+[PASS] Deterministic replay                            identical state, wind and gust reproduce bitwise-identical outputs
+[PASS] Invalid state dimension rejected                12-state input is rejected
+[PASS] Invalid wind dimension rejected                 wind must be a three-component NED column vector
+[PASS] Invalid quaternion rejected                     zero-norm attitude quaternion is rejected
+[PASS] Atmosphere-domain violation rejected            altitudes outside the declared ISA troposphere domain are rejected
+
+Passed audit cases                     : 27/27
+PASS: ISA atmosphere and the frozen 4000-ft trim environment match.
+PASS: NED wind/gust transforms and air-relative velocity signs pass.
+PASS: TAS, EAS, alpha, beta, qbar, Mach and Reynolds calculations pass.
+PASS: low-speed protection, domain rejection and replay gates pass.
+NOTE: this layer computes environmental and air-data quantities only; aerodynamic forces remain unimplemented.
+NOTE: this is an educational research model, not aircraft approval.
+
+
+============================================================
+4. [Aerodynamics] Near-trim aerodynamics audit
+Artifact: NONLINEAR-6DOF-V1-NEAR-TRIM-AERODYNAMICS-MATLAB-R1
+Checker: auditC172sNearTrimAerodynamics.m
+Path: <PROJECT_ROOT>\auditC172sNearTrimAerodynamics.m
+Status: PASS
+Cases: 27/27
+Duration: 0.476 s
+
+Captured output:
+============================================================
+ C172S NONLINEAR 6-DOF V1 - NEAR-TRIM AERO AUDIT
+============================================================
+
+Artifact                               : NONLINEAR-6DOF-V1-NEAR-TRIM-AERODYNAMICS-MATLAB-R1
+Longitudinal anchor                    : Longitudinal Plant V1
+Lateral anchor                         : Lateral-Directional Plant V0.1
+Linearization point                    : 4000 ft / 110 KTAS
+
+[PASS] Source/convention audit revision                NONLINEAR-6DOF-V1-SOURCE-AND-CONVENTION-AUDIT-MATLAB-R1
+[PASS] Rigid-body kernel revision                      NONLINEAR-6DOF-V1-RIGID-BODY-KERNEL-MATLAB-R1
+[PASS] Atmosphere/air-data revision                    NONLINEAR-6DOF-V1-ATMOSPHERE-AIR-DATA-MATLAB-R1
+[PASS] Frozen plant revisions                          Longitudinal Plant V1 and Lateral-Directional Plant V0.1
+[PASS] Released controller regression remains external v1.0.0 remains frozen at 18/18
+[PASS] Incremental trim residual is zero               maximum force/moment residual 0
+[PASS] Equilibrium forces remain external              future trim layer must supply weight/thrust/equilibrium balances
+[PASS] Dimensional derivative Jacobian recovered       maximum scaled derivative error 3.35e-10
+[PASS] Longitudinal force/moment derivatives recovered maximum scaled error 3.35e-10
+[PASS] Lateral force/moment derivatives recovered      maximum scaled error 1.55e-16
+[PASS] Frozen longitudinal A matrix reconstructed      maximum absolute error 1.18e-11
+[PASS] Frozen longitudinal B matrix reconstructed      maximum absolute error 1.8e-11
+[PASS] Frozen lateral A matrix reconstructed           maximum absolute error 1.78e-15
+[PASS] Frozen lateral B matrix reconstructed           maximum absolute error 0
+[PASS] Elevator sign preserved                         trailing-edge-up command produces positive nose-up moment
+[PASS] Aileron sign preserved                          right-wing-down command produces positive roll moment
+[PASS] Rudder sign preserved                           nose-right command produces positive yaw moment
+[PASS] Static longitudinal stability signs             positive alpha increases lift/drag and gives restoring pitch moment
+[PASS] Static lateral stability signs                  positive beta gives restoring side force, roll and yaw derivatives
+[PASS] Rate normalization uses current TAS             pHat/rHat use span and qHat uses mean aerodynamic chord
+[PASS] Alpha-dot derivatives retained                  positive alphaDot contributes positive lift and negative pitch moment
+[PASS] Deterministic replay                            identical state/control perturbations reproduce identical outputs
+[PASS] Attached-flow scheduling remains disabled       coefficients are frozen near-trim anchors, not scheduled tables
+[PASS] Stall and post-stall remain disabled            no stall, departure or spin claim enters this layer
+[PASS] Propulsion remains excluded                     thrust and propeller effects remain outside the aerodynamic Jacobian
+[PASS] Angle-of-attack envelope enforced               alpha outside the V0.1 attached-flow boundary is rejected
+[PASS] Sideslip envelope enforced                      beta outside the V0.1 attached-flow boundary is rejected
+
+Passed audit cases                     : 27/27
+Maximum dimensional Jacobian error     : 3.35343693e-10
+Longitudinal A/B maximum errors         : 1.17825749e-11 / 1.80300219e-11
+Lateral A/B maximum errors              : 1.77635684e-15 / 0
+PASS: nonlinear force/moment Jacobians reproduce all frozen derivatives.
+PASS: both frozen A/B matrix pairs are independently reconstructed.
+PASS: control, stability, rate and alpha-dot signs are preserved.
+NOTE: this is a near-trim compatibility layer; coefficient scheduling, propulsion and stall aerodynamics remain unimplemented.
+NOTE: this is an educational research model, not aircraft approval.
+
+
+============================================================
+5. [Assembly] Trim and total-force audit
+Artifact: NONLINEAR-6DOF-V1-TRIM-TOTAL-FORCE-MATLAB-R1
+Checker: auditC172sNonlinearTrim.m
+Path: <PROJECT_ROOT>\auditC172sNonlinearTrim.m
+Status: PASS
+Cases: 27/27
+Duration: 0.043 s
+
+Captured output:
+============================================================
+ C172S NONLINEAR 6-DOF V1 - TRIM/TOTAL-FORCE AUDIT
+============================================================
+
+Artifact                               : NONLINEAR-6DOF-V1-TRIM-TOTAL-FORCE-MATLAB-R1
+Near-trim aerodynamics                 : NONLINEAR-6DOF-V1-NEAR-TRIM-AERODYNAMICS-MATLAB-R1
+Trim target                            : 4000 ft / 110 KTAS / 2550 lb
+Propulsion status                      : calibrated one-point engineering assumption
+
+[PASS] Source/convention audit revision                 NONLINEAR-6DOF-V1-SOURCE-AND-CONVENTION-AUDIT-MATLAB-R1
+[PASS] Rigid-body kernel revision                       NONLINEAR-6DOF-V1-RIGID-BODY-KERNEL-MATLAB-R1
+[PASS] Atmosphere/air-data revision                     NONLINEAR-6DOF-V1-ATMOSPHERE-AIR-DATA-MATLAB-R1
+[PASS] Near-trim aerodynamic revision                   NONLINEAR-6DOF-V1-NEAR-TRIM-AERODYNAMICS-MATLAB-R1
+[PASS] Frozen plant revisions                           Longitudinal Plant V1 and Lateral-Directional Plant V0.1
+[PASS] Released controller regression remains external  v1.0.0 remains frozen at 18/18
+[PASS] Aerodynamic reference datum qualified            alpha=0 is the frozen reference axis, not measured fuselage incidence
+[PASS] Propulsion claim remains one-point only          calibrated trim thrust; no propeller or envelope schedule
+[PASS] Bounded solver converges from displaced guesses  3 independent initial guesses
+[PASS] Unique trim solution recovered                   maximum solution spread 1.11e-16
+[PASS] Frozen trim datum recovered                      alpha 0.000000 deg, elevator 0.000000 deg, throttle 0.650000
+[PASS] Lift balances weight                             lift-weight residual 0 N
+[PASS] Thrust balances drag                             thrust-drag residual 0 N
+[PASS] Side force and moments balance                   maximum residual 0
+[PASS] Rigid-body equilibrium derivative                maximum dynamic derivative 0
+[PASS] Horizontal NED trim velocity                     N/E/D velocity 56.588889 / 0.000000 / 0.000000 m/s
+[PASS] Quaternion remains unit norm                     norm error 0
+[PASS] Control bounds respected                         elevator, aileron, rudder and throttle within declared bounds
+[PASS] Throttle produces monotonic positive thrust      thrust 385.86 to 1157.58 N
+[PASS] Propulsion contributes no moment                 zero provisional propulsive moment
+[PASS] Deterministic replay                             identical initial guess reproduces bitwise-identical trim
+[PASS] Out-of-bounds initial guess rejected             alpha outside V0.1 cannot enter the solver
+[PASS] Out-of-bounds control rejected                   throttle above one cannot enter the total-force layer
+[PASS] Underpowered trim configuration rejected         bounded solver cannot hide insufficient maximum thrust
+[PASS] Coefficient scheduling remains disabled          near-trim frozen coefficients only
+[PASS] Stall and post-stall remain disabled             no departure or spin claim
+[PASS] Full dynamics linearization remains a next gate  total-force integration precedes independent 13-state Jacobian audit
+
+Passed audit cases                     : 27/27
+Trim alpha / elevator / throttle       : 0.00000000 deg / 0.00000000 deg / 0.65000000
+Force / moment residual norms          : 0 N / 0 N*m
+PASS: bounded level-flight trim is unique and deterministic.
+PASS: lift/weight and thrust/drag equilibrium balances close.
+PASS: control bounds and an underpowered no-solution case are enforced.
+NOTE: thrust is calibrated only at the frozen trim datum; no propeller map is claimed.
+NOTE: full 13-state integration and linearization remain the next stage; this is not aircraft approval.
+
+
+============================================================
+6. [Assembly] Integrated dynamics and linearization audit
+Artifact: NONLINEAR-6DOF-V1-INTEGRATED-DYNAMICS-AND-LINEARIZATION-MATLAB-R1
+Checker: auditC172sIntegratedNonlinearDynamics.m
+Path: <PROJECT_ROOT>\auditC172sIntegratedNonlinearDynamics.m
+Status: PASS
+Cases: 34/34
+Duration: 1.219 s
+
+Captured output:
+============================================================
+ C172S NONLINEAR 6-DOF V1 - INTEGRATED DYNAMICS AUDIT
+============================================================
+
+Artifact                               : NONLINEAR-6DOF-V1-INTEGRATED-DYNAMICS-AND-LINEARIZATION-MATLAB-R1
+State / control count                  : 13 / 4
+Trim                                   : 4000 ft / 110 KTAS / 2550 lb
+
+[PASS] Source/convention audit revision                  NONLINEAR-6DOF-V1-SOURCE-AND-CONVENTION-AUDIT-MATLAB-R1
+[PASS] Rigid-body kernel revision                        NONLINEAR-6DOF-V1-RIGID-BODY-KERNEL-MATLAB-R1
+[PASS] Atmosphere/air-data revision                      NONLINEAR-6DOF-V1-ATMOSPHERE-AIR-DATA-MATLAB-R1
+[PASS] Near-trim aerodynamic revision                    NONLINEAR-6DOF-V1-NEAR-TRIM-AERODYNAMICS-MATLAB-R1
+[PASS] Trim/total-force revision                         NONLINEAR-6DOF-V1-TRIM-TOTAL-FORCE-MATLAB-R1
+[PASS] Frozen plant revisions                            Longitudinal Plant V1 and Lateral-Directional Plant V0.1
+[PASS] Released controller regression remains external   v1.0.0 remains frozen at 18/18
+[PASS] Pitch inertia reconciled at assembly              Iyy 1828.680319 kg*m^2 from frozen longitudinal plant
+[PASS] Thrust-direction convention explicit              flight-path-compatible extension; physical propeller axis remains unidentified
+[PASS] Thirteen-state trim dynamics close                maximum non-translation derivative 6.61e-17
+[PASS] Trim inertial velocity is horizontal              N/E/D 56.588889 / 0.000000 / 0.000000 m/s
+[PASS] Alpha-dot algebraic consistency                   consistency error 3.22e-38 rad/s
+[PASS] Alpha-dot denominator remains regular             denominator 1.008459
+[PASS] Frozen longitudinal A matrix recovered            maximum absolute error 4.51e-11
+[PASS] Frozen longitudinal B matrix recovered            maximum absolute error 3.14e-11
+[PASS] Frozen lateral A matrix recovered                 maximum absolute error 6.67e-14
+[PASS] Frozen lateral B matrix recovered                 maximum absolute error 8.88e-16
+[PASS] Symmetric-trim first-order axis separation        maximum cross-axis Jacobian 0
+[PASS] Raw 13-state Jacobian dimensions                  13x13 state and 13x4 control matrices
+[PASS] Numerical Jacobian deterministic replay           maximum replay difference 0
+[PASS] Elevator sign in integrated plant                 trailing-edge-up produces nose-up moment
+[PASS] Aileron sign in integrated plant                  positive command produces right-wing-down moment
+[PASS] Rudder sign in integrated plant                   positive command produces nose-right moment
+[PASS] Throttle sign in integrated plant                 increased throttle increases forward force
+[PASS] Nonlinear longitudinal RK4 capture                maximum reduced-state difference 5.02e-06
+[PASS] Nonlinear lateral RK4 capture                     maximum reduced-state difference 1.49e-07
+[PASS] RK4 quaternion normalization                      maximum norm error 1.11e-16
+[PASS] Integrated deterministic replay                   identical RK4 capture reproduces bitwise-identical metric
+[PASS] Rigid-body coupling is active                     all translational, rotational, attitude and navigation states execute together
+[PASS] Unsupported aero cross derivatives remain absent  coupling arises from nonlinear mechanics, not invented coefficient tables
+[PASS] Coefficient scheduling remains disabled           frozen near-trim coefficients only
+[PASS] Propeller-map claim remains disabled              one-point calibrated thrust only
+[PASS] Stall/spin claim remains disabled                 attached-flow V0.1 envelope only
+[PASS] Aircraft-truth claim remains disabled             research validation plant, not aircraft approval
+
+Passed audit cases                     : 34/34
+Longitudinal A/B maximum errors         : 4.50905979e-11 / 3.14273052e-11
+Lateral A/B maximum errors              : 6.66966482e-14 / 8.8817842e-16
+Maximum first-order cross-axis term     : 0
+PASS: the complete thirteen-state nonlinear right-hand side executes.
+PASS: both frozen plant Jacobians are recovered independently.
+PASS: alpha-dot coupling, nonlinear RK4 captures and replay pass.
+NOTE: coefficients remain near-trim and thrust remains one-point calibrated; this is not aircraft approval.
+
+
+============================================================
+7. [Executable] Executable Simulink equivalence
+Artifact: C172S_Nonlinear6Dof_V1
+Checker: runNonlinear6DofSimulinkCheck.m
+Path: <PROJECT_ROOT>\runNonlinear6DofSimulinkCheck.m
+Status: PASS
+Cases: 6/6
+Duration: 7.613 s
+
+Captured output:
+Created Simulink model: <PROJECT_ROOT>\C172S_Nonlinear6Dof_V1.slx
+Run runNonlinear6DofSimulinkCheck to validate Nonlinear 6-DOF V1.
+============================================================
+ C172S NONLINEAR 6-DOF V1 - EXECUTABLE SIMULINK CHECK
+============================================================
+
+Model                                  : C172S_Nonlinear6Dof_V1
+Artifact                               : NONLINEAR-6DOF-V1-INTEGRATED-DYNAMICS-AND-LINEARIZATION-MATLAB-R1
+Solver / fixed step                    : ode4 / 0.0100 s
+Verification signals                   : 23 = 13 states + 10 diagnostics
+
+[PASS] trim equilibrium                   maximum error 3.55271368e-13
+[PASS] longitudinal perturbation          maximum error 2.00088834e-11
+[PASS] lateral perturbation               maximum error 2.54658516e-11
+[PASS] combined six-DOF perturbation      maximum error 2.91038305e-11
+[PASS] combined control offsets           maximum error 2.54658516e-11
+[PASS] steady wind plus gust              maximum error 3.09228199e-11
+
+Passed executable captures             : 6/6
+Maximum quaternion norm error          : 1.94511074e-13
+Maximum alpha-dot implementation error : 3.78657609e-16 rad/s
+PASS: Simulink matches independent hybrid RK4 references.
+PASS: trim, coupled perturbations, controls, wind and gust execute.
+PASS: the executable block does not call the MATLAB reference plant.
+NOTE: near-trim coefficients and one-point thrust limits remain; this is not aircraft approval.
+Reloaded generated model to clear transient editor diagnostics.
+
+

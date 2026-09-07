@@ -1,0 +1,25 @@
+# MATLAB editor and backup files
+*.asv
+*.autosave
+*.m~
+
+# Simulink generated caches and build products
+*.slxc
+slprj/
+sldebug/
+codegen/
+
+# Local release packages
+release/
+*.zip
+
+# Laboratory run exports
+FlightControlLabResults/
+
+# Operating-system/editor metadata
+.DS_Store
+Thumbs.db
+.vscode/
+
+# Known stray scratch file; do not release
+untitled.m
