@@ -1,13 +1,13 @@
 # C172S Flight Dynamics and Autopilot Laboratory
 
-- **Candidate:** `v1.1.0-candidate`
+- **Release:** `v1.1.0`
 - **Laboratory artifact:** `C172S-FLIGHT-CONTROL-LAB-V1-MATLAB-R4`
 - **Controller release:** `v1.0.0`
 - **Nonlinear 6-DOF release:** `v0.1.0`
 - **Nonlinear-autopilot integration:** `v0.1.0`
 - **Frozen external evidence:** `28/28 PASS`
 - **Inherited V1.0 laboratory audit:** `52/52 PASS`
-- **V1.1 qualification:** run locally before promotion
+- **V1.1 qualification:** COMPLETE — installation 20/20, laboratory audit 57/57, backend audit 8/8, frozen regression 28/28
 
 This package turns the complete C172S-inspired flight-controls project into one
 operable MATLAB laboratory. It provides a single menu for predefined missions,
@@ -94,15 +94,17 @@ The release preserves the following independently recorded evidence:
 | Combined project regression | 28/28 PASS |
 | Public laboratory audit, V1.0 R2 | 52/52 PASS |
 | Manual V1.0 R2 acceptance | PASS |
-| Public V1.1 R4 audit | 57/57 required; PENDING LOCAL RUN |
-| Public MATLAB/Simulink backend audit | 8/8 required; PENDING CLEAN-SESSION RUN |
+| Public V1.1 R4 audit | 57/57 PASS |
+| Public MATLAB/Simulink backend audit | 8/8 PASS |
+
+Final V1.1 promotion evidence also recorded an installation preflight **PASS (20/20 required files)**, exact discrete-signal agreement between public MATLAB and Simulink backends, a backend-audit maximum 58-signal difference of **4.54747351e-13** against the **3.0e-7** tolerance, and a quick-demo `COMPARE` run with **overall PASS / equivalence PASS**. The quick-demo maximum difference was **5.00222086e-12**; recorded wall times were **33.37 s MATLAB** and **2.13 s Simulink**.
 
 Manual R2 acceptance covered bumpless ROLL/PITCH engagement, wind and vertical
 gust rejection, confirmed heading-source fallback, pilot disconnect and surface
 release, plots, event markers and mode-aware reporting. See
 `ACCEPTANCE_EVIDENCE.md`.
 
-For V1.1 qualification, follow `V1_1_QUALIFICATION.md`. The two new gates are:
+The final V1.1 qualification record is documented in `V1_1_QUALIFICATION.md`. The two principal public gates are:
 
 ```matlab
 clear functions
@@ -118,9 +120,8 @@ results = runAllNonlinearAutopilotChecks;
 
 ## Software
 
-The V1.0 baseline was validated in MATLAB/Simulink R2026a. V1.1 retains MATLAB
-as its default backend and adds first-class SIMULINK and COMPARE paths that
-must be qualified in the target environment before the candidate is promoted.
+The V1.0 baseline and final V1.1 release were validated in MATLAB/Simulink R2026a. V1.1 retains MATLAB
+as its default backend and adds qualified first-class SIMULINK and COMPARE paths.
 Simulink is required for those paths and executable regression gates. Control System Toolbox is required by the
 linear design and robustness analyses. Stateflow support is used when building
 or inspecting generated MATLAB Function blocks.

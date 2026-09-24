@@ -73,4 +73,4 @@ results = runAllNonlinearAutopilotChecks;
 
 Expected combined result: `28/28 PASS`.
 
-See `V1_1_QUALIFICATION.md` before promoting this candidate.
+See `V1_1_QUALIFICATION.md` for the recorded final V1.1 qualification evidence.

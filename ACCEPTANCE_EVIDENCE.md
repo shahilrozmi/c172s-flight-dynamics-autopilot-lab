@@ -1,4 +1,11 @@
-# Laboratory V1.1 Candidate Acceptance Evidence
+# Laboratory V1.1 Acceptance Evidence
+
+## Release status
+
+- Release: `v1.1.0`
+- Laboratory artifact: `C172S-FLIGHT-CONTROL-LAB-V1-MATLAB-R4`
+- Qualification environment: MATLAB/Simulink R2026a
+- Promotion status: **PASS**
 
 ## Inherited frozen evidence
 
@@ -11,24 +18,38 @@
 | Public laboratory V1.0 R2 audit | 52/52 PASS |
 | Manual V1.0 R2 acceptance | PASS |
 
-The saved reports are retained unchanged. They establish the baseline against
-which V1.1 is qualified; they do not by themselves qualify the new public
-backend selection feature.
+The saved reports are retained unchanged and establish the frozen baseline against which V1.1 was qualified.
 
 ## V1.1 promotion gates
 
-| Gate | Required result | Candidate status |
+| Gate | Required result | Final result |
 |---|---:|---:|
-| `verifyC172sFlightDynamicsAutopilotLabInstallation` | PASS | static check required locally |
-| `auditC172sFlightControlLab` | 57/57 PASS | pending local MATLAB run |
-| `auditC172sFlightControlLabBackends` | 8/8 PASS | pending clean-session Simulink run |
-| `runAllNonlinearAutopilotChecks` | 28/28 PASS | pending regression confirmation |
-| Quick-demo `COMPARE` run | overall PASS and equivalence PASS | pending manual inspection |
+| `verifyC172sFlightDynamicsAutopilotLabInstallation` | PASS | **PASS — R4, 20/20 required files** |
+| `auditC172sFlightControlLab` | 57/57 PASS | **57/57 PASS** |
+| `auditC172sFlightControlLabBackends` | 8/8 PASS | **8/8 PASS — clean start** |
+| `runAllNonlinearAutopilotChecks` | 28/28 PASS | **28/28 PASS** |
+| Quick-demo `COMPARE` run | overall PASS and equivalence PASS | **PASS / PASS** |
 
-The backend audit uses a non-trivial 20-second HEADING/ALTITUDE mission. It
-requires identical discrete engagement/mode/event/protection signals and a
-maximum absolute difference of `3.0e-7` across 26 states plus 32 diagnostics.
-It also clears the model input before execution and verifies that the public
-runner leaves no base-workspace residue.
+## MATLAB / Simulink backend equivalence
 
-Use `V1_1_QUALIFICATION.md` for the exact commands and evidence to return.
+The public backend audit used the non-trivial 20-second HEADING/ALTITUDE mission defined by the release qualification procedure. Results:
+
+- Maximum absolute difference across 26 states + 32 diagnostics: **4.54747351e-13**
+- Required tolerance: **3.0e-7**
+- Discrete engagement/mode/event/protection signals: **exact match**
+- Cold-start workspace independence: **PASS**
+- Base-workspace residue check: **PASS**
+
+The full public quick-demo `COMPARE` inspection also passed:
+
+- Scenario objective: **PASS**
+- Overall status: **PASS**
+- Backend equivalence: **PASS**
+- Maximum 58-signal difference: **5.00222086e-12**
+- MATLAB wall time: **33.37 s**
+- Simulink wall time: **2.13 s**
+- Total comparison wall time: **35.49 s**
+
+No qualification errors were recorded. The clean-start backend audit emitted only benign MATLAB `clear classes` warnings involving loaded `datetime` / `digraph` objects; they did not affect the PASS results.
+
+See `V1_1_QUALIFICATION.md` for the commands and final qualification record.

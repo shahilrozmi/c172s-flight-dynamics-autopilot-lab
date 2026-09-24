@@ -1,8 +1,6 @@
-# V1.1 Candidate Qualification
+# V1.1 Qualification Record
 
-Run these commands from the candidate folder in MATLAB/Simulink R2026a or a
-compatible environment. Do not copy only the changed files into V1.0; keep the
-candidate as a separate release line.
+The C172S Flight Dynamics and Autopilot Laboratory V1.1 was qualified in MATLAB/Simulink R2026a before promotion to `v1.1.0`. This file preserves both the qualification commands and the recorded results.
 
 ## 1. Clear cached code and verify the package
 
@@ -13,8 +11,9 @@ bdclose('all')
 report = verifyC172sFlightDynamicsAutopilotLabInstallation;
 ```
 
-Required: installation preflight `PASS`, artifact R4, and all required files
-present.
+Required: installation preflight `PASS`, artifact R4, and all required files present.
+
+**Recorded result: PASS — `C172S-FLIGHT-CONTROL-LAB-V1-MATLAB-R4`, 20/20 required files.**
 
 ## 2. Run the MATLAB laboratory audit
 
@@ -23,9 +22,9 @@ clear functions
 labResults = auditC172sFlightControlLab;
 ```
 
-Required: `57/57 PASS`. This confirms presets, boundaries, analysis,
-deterministic replay, the optimized reference path, and the new backend option
-contract.
+Required: `57/57 PASS`.
+
+**Recorded result: 57/57 PASS.**
 
 ## 3. Qualify the public Simulink integration
 
@@ -35,9 +34,16 @@ bdclose('all')
 backendResults = auditC172sFlightControlLabBackends;
 ```
 
-Required: `8/8 PASS`, cold-start workspace independence, discrete signals
-exact, both scenario objectives PASS, and maximum 58-signal error no greater
-than `3.0e-7`.
+Required: `8/8 PASS`, cold-start workspace independence, discrete signals exact, both scenario objectives PASS, and maximum 58-signal error no greater than `3.0e-7`.
+
+**Recorded result: 8/8 PASS.**
+
+- Clean-start workspace independence: PASS
+- Discrete engagement/mode/event/protection signals: exact
+- Maximum 58-signal difference: `4.54747351e-13`
+- Acceptance tolerance: `3.0e-7`
+
+The run emitted only benign MATLAB `clear classes` warnings involving loaded `datetime` / `digraph` objects; no qualification error was recorded.
 
 ## 4. Reconfirm the frozen regression chain
 
@@ -47,6 +53,8 @@ backendRegression = runAllNonlinearAutopilotChecks;
 ```
 
 Required: all three nonlinear-autopilot gates and combined `28/28 PASS`.
+
+**Recorded result: 28/28 PASS.**
 
 ## 5. Inspect a full public comparison
 
@@ -58,11 +66,18 @@ options = struct('Backend','COMPARE','ShowPlots',true, ...
 comparisonRun = runC172sFlightControlScenario(scenario,options,model);
 ```
 
-Required: scenario objective PASS, overall PASS, backend equivalence PASS, and
-the MATLAB/Simulink traces visually coincident at plot scale.
+Required: scenario objective PASS, overall PASS, backend equivalence PASS, and MATLAB/Simulink traces visually coincident at plot scale.
 
-## Evidence to record
+**Recorded result: PASS.**
 
-Return the final pass counts, maximum 58-signal difference, separate MATLAB and
-Simulink quick-demo wall times, and any warning/error text. Promotion to `v1.1.0` should happen only after
-all five steps satisfy their required results.
+- Scenario objective: PASS
+- Overall result: PASS
+- Backend equivalence: PASS
+- Maximum 58-signal difference: `5.00222086e-12`
+- MATLAB wall time: `33.37 s`
+- Simulink wall time: `2.13 s`
+- Total comparison wall time: `35.49 s`
+
+## Promotion decision
+
+All five qualification steps satisfied their required results. The candidate was therefore promoted to **`v1.1.0`**.
